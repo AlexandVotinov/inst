@@ -5,6 +5,8 @@ import Profile from "../views/Profile.js";
 
 const app = document.getElementById('app');
 
+let listenerlist = [];
+
 const views = {
     'main': Main,
     'profile' : Profile
@@ -19,18 +21,11 @@ function locationHashChanged() {
     const hash = location.hash.slice(1)
 
     const view = new views[hash]();
-    const components = view.getComponents()
 
-    app.innerHTML = view.getHtml()
+    view.render()
 
 
-    Object.keys(components).forEach(key => {
-        document.querySelectorAll(key).forEach(el => {
-            const component = new components[key]
-
-            el.innerHTML = component.getHtml()
-        })
-    })
+    
 
 
 }

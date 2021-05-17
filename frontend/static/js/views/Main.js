@@ -15,6 +15,7 @@ export default class extends appView{
         return `
             <app-header></app-header>
             <h1>main page</h1>
+            <app-header></app-header>
         `;
     }
 }
