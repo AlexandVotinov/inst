@@ -1,4 +1,7 @@
+import Footer from "../components/Footer.js";
 import Header from "../components/Header.js";
+import Publications from "../components/Publications.js";
+import UserMenu from "../components/UserMenu.js";
 import appView from "./app.view.js";
 
 export default class extends appView{
@@ -7,14 +10,21 @@ export default class extends appView{
         this.setTitle("profile");
 
         this.components = {
-            'app-header' : Header
+            'app-header'   : Header,
+            'app-user-menu': UserMenu,
+            'app-publications': Publications,
+            'app-footer': Footer
         }
     }
 
     getHtml() {
         return `
-            <app-header></app-header>
-            <h1>profile page</h1>
+            <main>
+                <app-header></app-header>
+                <app-user-menu></app-user-menu>
+                <app-publications></app-publications>
+            </main>
+            <app-footer></app-footer>
         `;
     }
 }

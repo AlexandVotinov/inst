@@ -1,6 +1,6 @@
 export default class {
     constructor(element) {
-        this.element = element;  
+        this.element = element
     }
 
     getHtml() {
@@ -22,11 +22,15 @@ export default class {
                
 
                 
-                const input = this.element.querySelector(`[bind=${ev}]`);
-                if(input){
-                    input.addEventListener('input', events[ev])
-                }
+                this.element.querySelectorAll(`[bind]`).forEach(elem => {
+                    elem.addEventListener('input', e => {
+                        this[e.target.getAttribute('bind')] = e.target.value
+                    })
+                })
 
+                this.element.querySelectorAll(`[file]`).forEach(elem => {
+                    elem.addEventListener('change', events[elem.getAttribute('file')])
+                })
             })
         }
     }

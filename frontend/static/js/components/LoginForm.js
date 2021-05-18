@@ -1,39 +1,47 @@
-import { navigateTo } from "../../index.js";
-import AbstractView from "../AbstractView.js";
+import appComponent from "./app.component.js";
 
-export default class extends AbstractView {
+export default class extends appComponent{
     constructor(params) {
         super(params);
-        this.setTitle("Login");
-        this.errorMessage = '';
-        this.nickName = ''
-        this.password = ''
+        this.name = 'app-login-form'
+
+        
+        this.userNickName = ''
+        this.userPass = ''
+        this.errorMessage = ''
 
     }
-
-    async login(){
-        let user = {
-            nickname: this.nickName,
-            password: this.password,
-        }
-        let response = await fetch('http://localhost:3200/auth/login', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(user),
-        });
-        const json = await response.json();
     
-        if(response.status == 200){
-            sessionStorage.setItem('token', json.token);
-            return navigateTo(`/profile/${json.nickname}`)
-        }else{
-            this.errorMessage = json.message;
+    events(){
+        let that = this
+        return {
+            async login(){
+                const user = {
+                    nickname: that.userNickName,
+                    password: that.userPass,
+                }
+
+                let response = await fetch('http://localhost:3200/auth/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(user),
+                });
+                const json = await response.json();
+                if(response.status == 200){
+                    sessionStorage.setItem('token', json.token);
+                    return window.location.hash = 'main'
+                }else{
+                    that.errorMessage = json.message;
+                }
+                that.render()
+                
+            }
         }
-        this.render() 
     }
 
+    
     getHtml() {
         return `
         <div class="main-login">
@@ -44,9 +52,9 @@ export default class extends AbstractView {
                     </div>
                     <div class="main-authentication-block--form_fields">
                         <form>
-                            <input type="text" placeholder="Имя пользователя" value="${this.nickName}" bind="nickName">
-                            <input type="password" placeholder="Пароль" value="${this.password}" bind="password">
-                            <input  type="submit" value="Войти" event="login">
+                            <input type="text" placeholder="Имя пользователя"  bind='userNickName' value='${this.userNickName}'>
+                            <input type="password" placeholder="Пароль"  bind='userPass' value='${this.userPass}'>
+                            <input  type="submit" value="Войти" event='login'>
                         </form>
                         <div id="alert_message">${this.errorMessage}</div>
                     </div>
@@ -64,7 +72,7 @@ export default class extends AbstractView {
                 </div>
                 <div class="main-authentication-block--register">
                     <span>У вас ещё нет аккаунта?</span>
-                    <a href="/registration" data-link>Зарегистрироваться</a>
+                    <a href="#registration">Зарегистрироваться</a>
                 </div>
             </div>
         </div>

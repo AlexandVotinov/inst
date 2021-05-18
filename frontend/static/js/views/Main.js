@@ -1,3 +1,4 @@
+import Footer from "../components/Footer.js";
 import Header from "../components/Header.js";
 import appView from "./app.view.js";
 
@@ -7,15 +8,18 @@ export default class extends appView{
         this.setTitle("main");
 
         this.components = {
-            'app-header' : Header
+            'app-header' : Header,
+            'app-footer': Footer
         }
     }
 
     getHtml() {
         return `
-            <app-header></app-header>
-            <h1>main page</h1>
-            <app-header></app-header>
+            <main>
+                <app-header></app-header>
+                <h1>Лента</h1>
+            </main>
+            <app-footer></app-footer>
         `;
     }
 }
