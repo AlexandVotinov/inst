@@ -34,7 +34,7 @@ export default class extends appComponent{
                 });
                 const json = await response.json();
                 if(response.status == 200){
-                    return window.location.hash = 'login'
+                    return that.navigateTo('login')
                 }else{
                     that.errorMessage = json.message;
                 }

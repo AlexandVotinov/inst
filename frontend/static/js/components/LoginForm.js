@@ -31,7 +31,7 @@ export default class extends appComponent{
                 const json = await response.json();
                 if(response.status == 200){
                     sessionStorage.setItem('token', json.token);
-                    return window.location.hash = 'main'
+                    return that.navigateTo('main')
                 }else{
                     that.errorMessage = json.message;
                 }

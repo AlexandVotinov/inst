@@ -1,12 +1,17 @@
 export default class {
     constructor(element) {
         this.element = element
+        this.token = sessionStorage.getItem('token')
+        this.page = window.location.hash.slice(1)
     }
 
     getHtml() {
         return "";
     }
 
+    navigateTo(url){
+        window.location.hash = url
+    }
     render(){
         this.element.innerHTML = this.getHtml()
 
